@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đề Thi Trắc Nghiệm - Phương pháp DUYMT</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; background: #f4f7f6; }
+        .question { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .options button { display: block; width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; cursor: pointer; text-align: left; }
+        .correct { background-color: #d4edda !important; border-color: #c3e6cb !important; }
+        .wrong { background-color: #f8d7da !important; border-color: #f5c6cb !important; }
+        .explanation { margin-top: 10px; padding: 10px; background: #e2e3e5; display: none; }
+        .tip { color: #2b6cb0; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<h1>Đề Thi Trắc Nghiệm Sư Phạm DUYMT</h1>
+<div id="quiz-container"></div>
+
+<script>
+const quizData = [
+    // 5 Lý thuyết
+    { q: "Triết lý 'Đọc điều công thức che giấu' có nghĩa là gì?", a: ["Học thuộc công thức", "Nhìn thấu bản chất hình học/logic", "Chỉ làm bài tập khó", "Không cần công thức"], correct: 1, explanation: "Người thầy giỏi không dạy công thức máy móc mà giúp học sinh hiểu tư tưởng ẩn giấu[cite: 48, 49].", tip: "Tìm bản chất, đừng tìm công thức." },
+    { q: "Harnessing AI được hiểu như thế nào trong phương pháp DUYMT?", a: ["Để AI làm thay", "Điều khiển, ghì cương tư duy của AI", "Chỉ nhập prompt đơn giản", "Học thuộc các câu lệnh"], correct: 1, explanation: "Harnessing là ghì cương AI, điều khiển hướng tư duy của nó giống như cưỡi ngựa[cite: 36, 40, 41].", tip: "Harnessing = ghì cương." },
+    { q: "Tại sao đạo hàm là phép chiếu làm mất thông tin?", a: ["Vì nó làm hàm số đơn giản hơn", "Vì đạo hàm hằng số bằng 0, làm mất lịch sử", "Vì nó gây sai số", "Vì nó không tính được"], correct: 1, explanation: "Đạo hàm xóa mất thông tin về hằng số ban đầu (lịch sử)[cite: 82, 84, 146].", tip: "Đạo hàm chỉ giữ lại chuyển động." },
+    { q: "Deconstruction trong phương pháp DUYMT là gì?", a: ["Học thuộc lòng", "Tái tạo kiến thức từ gốc bằng logic", "Sử dụng máy tính", "Không học lý thuyết"], correct: 1, explanation: "Đừng học thuộc công thức, hãy giả sử chưa biết và xây dựng lại nó[cite: 60, 116].", tip: "Xây dựng lại từ gốc." },
+    { q: "Bản chất của tiếp tuyến $y=f(a)+f'(a)(x-a)$ là gì?", a: ["Một đường cong phức tạp gần giống đường thẳng", "Một quy tắc tính toán", "Một định nghĩa hình học", "Tất cả đều đúng"], correct: 0, explanation: "Khi nhìn đủ gần, đường cong trở nên gần giống đường thẳng[cite: 55, 109].", tip: "Phóng to đường cong sẽ thấy đường thẳng." },
+    
+    // 15 câu bài tập (Dễ, Trung bình, Khó) sẽ thêm vào đây theo cấu trúc tương tự...
+];
+
+function renderQuiz() {
+    const container = document.getElementById('quiz-container');
+    quizData.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'question';
+        div.innerHTML = `<p><strong>Câu ${index + 1}:</strong> ${item.q}</p>` +
+            item.a.map((opt, i) => `<button onclick="check(${index}, ${i})">${opt}</button>`).join('') +
+            `<div id="exp-${index}" class="explanation"><p>${item.explanation}</p><p class="tip">Mẹo: ${item.tip}</p></div>`;
+        container.appendChild(div);
+    });
+}
+
+function check(qIdx, optIdx) {
+    const exp = document.getElementById(`exp-${qIdx}`);
+    exp.style.display = 'block';
+    const buttons = exp.parentElement.querySelectorAll('button');
+    buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === quizData[qIdx].correct) btn.className = 'correct';
+        else if (i === optIdx) btn.className = 'wrong';
+    });
+}
+renderQuiz();
+</script>
+</body>
+</html>
